@@ -1,6 +1,23 @@
 <template>
   <div>
     <div v-if="site.notice" style="padding: 10px;color: #a3a3a3;">公告: {{ site.notice }}</div>
+        <!-- 手机端公告图片 -->
+    <div class="navbar" v-if="mobile_menu_status">
+    <div class="text-center">
+      <el-carousel :interval="4000" arrow-direction="none">
+      <el-carousel-item v-for="(item, index) in carouselItems" :key="index">
+        <img :src="item.src" />
+      </el-carousel-item>
+    </el-carousel>
+    </div>
+  </div>
+  <div v-else>
+    <el-carousel :interval="4000" arrow-direction="none">
+      <el-carousel-item v-for="(item, index) in carouselItems2" :key="index">
+        <img :src="item.src" />
+      </el-carousel-item>
+    </el-carousel>
+  </div>
     <header class="header">
       <div class="live">
         <div class="live__list-wrapper">
@@ -565,8 +582,18 @@ import {getStore, removeStore, setStore} from "@/utils/store.js";
 import Vue from 'vue';
 
 export default {
+  name: "Navbar",
   data() {
     return {
+            // 图片数据
+      carouselItems: [
+        { src: require("@/assets/img/hd2-1.jpg") },
+        { src: require("@/assets/img/hd2-2.jpg") },
+      ],
+      carouselItems2: [
+        { src: require("@/assets/img/hd1.jpg") },
+        { src: require("@/assets/img/hd1.jpg") },
+      ],
       server_url: this.$server_url,
       img_url: this.$img_url,
       site: {},
@@ -2094,6 +2121,53 @@ export default {
 
 .text-left {
   text-align: left !important;
+}
+@media (max-width: 768px) {
+  /* 手机端样式 */
+  /* 在此添加针对手机端的CSS样式 */
+  .text-center {
+  position: relative;
+  height: auto; /* 设置容器高度为屏幕高度的100% */
+}
+
+.el-carousel__item img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition: all 0.3s ease-out;
+  width: 100%; /* 设置图片宽度为容器宽度的100% */
+}
+
+.el-carousel__item.is-active img {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+}
+
+@media (min-width: 769px) {
+  /* 电脑端样式 */
+  /* 在此添加针对电脑端的CSS样式 */
+  .text-center {
+  position: relative;
+  height: auto;
+}
+
+.el-carousel__item img {
+  width: 80%; /* 缩小为原来的80% */
+  height: auto; /* 高度自适应 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  transition: all 0.3s ease-out;
+}
+
+.el-carousel__item.is-active img {
+  transform: translate(-50%, -50%) scale(0.6);
+}
+
+
 }
 
 .mobile-menu__content:after {
