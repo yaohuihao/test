@@ -1,22 +1,15 @@
 <template>
   <div>
     <div v-if="site.notice" style="padding: 10px;color: #a3a3a3;">公告: {{ site.notice }}</div>
-        <!-- 手机端公告图片 -->
-    <div class="navbar" v-if="mobile_menu_status">
+    <div class="navbar">
+    <!-- 其他代码 -->
     <div class="text-center">
       <el-carousel :interval="4000" arrow-direction="none">
       <el-carousel-item v-for="(item, index) in carouselItems" :key="index">
-        <img :src="item.src" />
+        <img :src="item.src + '?random=' + Math.random()" />
       </el-carousel-item>
     </el-carousel>
     </div>
-  </div>
-  <div v-else>
-    <el-carousel :interval="4000" arrow-direction="none">
-      <el-carousel-item v-for="(item, index) in carouselItems2" :key="index">
-        <img :src="item.src" />
-      </el-carousel-item>
-    </el-carousel>
   </div>
     <header class="header">
       <div class="live">
@@ -585,14 +578,10 @@ export default {
   name: "Navbar",
   data() {
     return {
-            // 图片数据
+            // 其他数据
       carouselItems: [
-        { src: require("@/assets/img/hd2-1.jpg") },
-        { src: require("@/assets/img/hd2-2.jpg") },
-      ],
-      carouselItems2: [
-        { src: require("@/assets/img/hd1.jpg") },
-        { src: require("@/assets/img/hd1.jpg") },
+      { src: require("@/assets/img/hd1.jpg") },
+      { src: require("@/assets/img/hd1.jpg") },
       ],
       server_url: this.$server_url,
       img_url: this.$img_url,
@@ -2134,7 +2123,7 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
+  transform: translate(-50%, -50%) scale(1);
   transition: all 0.3s ease-out;
   width: 100%; /* 设置图片宽度为容器宽度的100% */
 }
